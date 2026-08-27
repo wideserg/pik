@@ -13,11 +13,18 @@ from match import format_card_fields, match_model  # noqa: E402
 from overlay import CardManager  # noqa: E402
 from prices import ensure_daily_refresh, load_state, save_state  # noqa: E402
 from read_ui import read_text_at_cursor  # noqa: E402
+from debug import DUMP_DIR, is_enabled, set_enabled  # noqa: E402
 from theme import set_theme  # noqa: E402
 from tray import TrayIcon  # noqa: E402
 from welcome import WelcomeWindow  # noqa: E402
 
 def main():
+    argv = sys.argv[1:]
+    if "--debug" in argv:
+        set_enabled(True)
+    elif is_enabled():
+        set_enabled(True)
+    hklog(f"Pik start debug={is_enabled()} dumps={DUMP_DIR}")
     state = load_state()
     theme_name = state.get("theme", "dark")
     set_theme(theme_name)

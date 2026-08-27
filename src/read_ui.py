@@ -10,6 +10,7 @@ except ImportError:
     auto = None  # type: ignore
 
 from ocr import ocr_at_cursor
+from hotkey import hklog
 
 _GENERIC_RE = re.compile(
     r"^(?:chrome[_\s]?widgetwin[_\s]?\d*|cursor|pane|window|list|tree)$",
@@ -22,6 +23,15 @@ _GENERIC_JUNK = re.compile(
 )
 _FAMILY_RE = re.compile(
     r"\b(gpt|grok|claude|gemini|composer|glm|kimi|sonnet|opus|haiku)\b",
+    re.I,
+)
+# Cursor/VS Code chrome. ControlFromPoint often punches through the model
+# picker onto the editor behind it ("Editor Group 1 (empty)"); a digit
+# made that look "useful" and skipped OCR. Second hover usually works
+# because the list item's UIA tree has caught up.
+_WORKBENCH_RE = re.compile(
+    r"\beditor group\b|\bside bar\b|\bactivity bar\b|\bstatus bar\b"
+    r"|\bauxiliary bar\b|\btitle bar\b|\bmenu bar\b",
     re.I,
 )
 
@@ -52,8 +62,11 @@ def uia_is_useful(parts: list[str]) -> bool:
     if tokens and all(_GENERIC_RE.match(t) for t in tokens):
         return False
 
-    has_digit = bool(re.search(r"\d", joined))
     has_family = bool(_FAMILY_RE.search(joined))
+    if _WORKBENCH_RE.search(normalized) and not has_family:
+        return False
+
+    has_digit = bool(re.search(r"\d", joined))
     return has_digit or has_family
 
 
@@ -88,11 +101,21 @@ def _read_uia_parts(x: int, y: int) -> list[str]:
 
     try:
         ctrl = auto.ControlFromPoint(x, y)
-    except Exception:
+    except Exception as e:
+        hklog(f"uia ControlFromPoint fail @({x},{y}) {type(e).__name__}: {e}")
         return parts
 
     if not ctrl:
+        hklog(f"uia ControlFromPoint None @({x},{y})")
         return parts
+
+    try:
+        hklog(
+            f"uia hit @({x},{y}) type={ctrl.ControlTypeName!s} "
+            f"class={ctrl.ClassName!r} name={ctrl.Name!r} id={ctrl.AutomationId!r}"
+        )
+    except Exception as e:
+        hklog(f"uia hit @({x},{y}) meta fail {e!r}")
 
     def add(text: str | None):
         if text:
@@ -117,12 +140,15 @@ def read_text_at_cursor() -> tuple[list[str], tuple[int, int], bool]:
     """Return (haystack parts, cursor pos, used_ocr)."""
     x, y = get_cursor_pos()
     parts = _read_uia_parts(x, y)
+    useful = uia_is_useful(parts)
+    hklog(f"uia useful={useful} parts={parts!r}")
 
-    if uia_is_useful(parts):
+    if useful:
         return parts, (x, y), False
 
     ocr_text = ocr_at_cursor(x, y)
     if ocr_text:
         return [ocr_text], (x, y), True
 
+    hklog("ocr empty → miss")
     return parts, (x, y), False

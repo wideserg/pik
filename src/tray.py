@@ -9,6 +9,8 @@ from typing import Callable
 import pystray
 from PIL import Image
 
+from debug import is_enabled, set_enabled
+
 ROOT_DIR = Path(__file__).resolve().parent.parent
 ICON_ICO = ROOT_DIR / "assets" / "pik.ico"
 ICON_PNG = ROOT_DIR / "assets" / "pik.png"
@@ -46,10 +48,18 @@ class TrayIcon:
     def _default_action(self, icon: pystray.Icon) -> None:
         self._marshal(self._on_open)
 
+    def _menu_debug(self, _icon: pystray.Icon, _item: pystray.MenuItem) -> None:
+        set_enabled(not is_enabled())
+
     def start(self) -> None:
         image = _load_icon_image()
         menu = pystray.Menu(
             pystray.MenuItem("Open", self._menu_open, default=True),
+            pystray.MenuItem(
+                "Debug captures",
+                self._menu_debug,
+                checked=lambda _item: is_enabled(),
+            ),
             pystray.MenuItem("Quit", self._menu_quit),
         )
         self._icon = pystray.Icon("Pik", image, "Pik", menu, on_activate=self._default_action)

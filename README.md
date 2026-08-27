@@ -10,6 +10,10 @@ Windows companion for Cursor model picker prices — hover a model, press **Alt+
 
 Demo video: *(coming soon)*
 
+## Why it exists
+
+I switch models constantly and want to know which one is actually cheaper for the job. You can't inject into Cursor's UI, and the picker isn't one surface — desktop, VS Code, web, agents — so Pik sits outside and reads whatever is under the cursor.
+
 ## What it does
 
 - Lives in the system tray; shows a compact welcome window on launch with a daily price summary.
