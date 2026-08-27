@@ -1,0 +1,5 @@
+uiautomation==2.0.29
+winocr==0.0.15
+mss==9.0.2
+Pillow==11.1.0
+pystray==0.19.5
