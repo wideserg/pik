@@ -6,7 +6,7 @@ Windows companion for Cursor model picker prices — hover a model, press **Alt+
 [![Windows](https://img.shields.io/badge/Windows-10%2B-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 
-![Pik demo: hover a model, then Alt+P](assets/pik-demo.mp4)
+![Pik demo: hover a model, then Alt+P](assets/pik-demo.gif)
 
 ## Why it exists
 
