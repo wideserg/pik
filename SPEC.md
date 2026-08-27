@@ -16,11 +16,11 @@ Global Windows hotkey reads UI text under the mouse, matches it to Cursor model 
 
 ## UX
 
-- Hotkey: **Ctrl+Alt+P**
+- Hotkey: **Alt+P**
 - Tooltip near cursor, `topmost`, no activate, auto-hide ~4s
 - Click-through (`WS_EX_TRANSPARENT` + `WS_EX_NOACTIVATE` + `WS_EX_TOOLWINDOW`)
 - If no match: show captured text + “no price”
-- Console window may stay open (“running — Ctrl+Alt+P, Ctrl+C to quit”)
+- Console window may stay open (“running — Alt+P, Ctrl+C to quit”)
 
 ## Data
 

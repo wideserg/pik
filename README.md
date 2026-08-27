@@ -1,12 +1,12 @@
 # Pik
 
-Windows companion for Cursor model picker prices — hover a model, press **Ctrl+Alt+P**, pin cards to compare.
+Windows companion for Cursor model picker prices — hover a model, press **Alt+P**, pin cards to compare.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Windows](https://img.shields.io/badge/Windows-10%2B-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
 [![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 
-<!-- screenshot -->
+![Pik welcome window: hover a model, then Alt+P](assets/welcome.png)
 
 Demo video: *(coming soon)*
 
@@ -14,7 +14,7 @@ Demo video: *(coming soon)*
 
 - Lives in the system tray; shows a compact welcome window on launch with a daily price summary.
 - Refreshes model prices once per day from [Cursor's pricing docs](https://cursor.com/docs/models-and-pricing).
-- **Ctrl+Alt+P** captures the model name under your cursor and spawns a floating price card.
+- **Alt+P** captures the model name under your cursor and spawns a floating price card.
 - Pin up to 8 cards, drag them around, compare models side by side.
 - Dark / light theme, persisted locally.
 
@@ -45,7 +45,7 @@ Double-click **`run-startup.bat`**, or drop a shortcut into your Windows Startup
 |--------|-----|
 | Tray icon | Left-click → welcome window. Right-click → Open / Quit. |
 | Welcome | Daily price summary, theme toggle, last-fetch status. |
-| Hotkey | Hover a model in Cursor's picker, press **Ctrl+Alt+P**. |
+| Hotkey | Hover a model in Cursor's picker, press **Alt+P**. |
 | Cards | Pin (📌) to keep open, drag the title bar, **×** to close. Unpinned cards auto-hide after ~4 s of no hover. |
 | Theme | Toggle Light / Dark in the welcome window. |
 

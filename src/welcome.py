@@ -159,7 +159,7 @@ class WelcomeWindow:
         chips = tk.Frame(row, bg=p["bg"])
         chips.pack(side=tk.LEFT)
 
-        for i, key in enumerate(("Ctrl", "Alt", "P")):
+        for i, key in enumerate(("Alt", "P")):
             if i:
                 tk.Label(
                     chips,

@@ -2,3 +2,5 @@ state.json
 __pycache__/
 .venv/
 *.pyc
+
+pik-hotkey.log
